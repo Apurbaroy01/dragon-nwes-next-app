@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
 import avtar from "../../assets/user.png";
+import NavLink from "./NavLink";
 
 
 const Navbar = () => {
@@ -8,9 +8,9 @@ const Navbar = () => {
         <div className="flex justify-between items-center py-4  max-w-5xl mx-auto">
             <div></div>
             <ul className="flex justify-center items-center gap-4  text-center">
-                <li><Link href="/">Home</Link></li>
-                <li><Link href="/about">About</Link></li>
-                <li><Link href="/careare">Careare</Link></li>
+                <li><NavLink href={"/"}>Home</NavLink></li>
+                <li><NavLink href={"/about"}>About</NavLink></li>
+                <li><NavLink href={"/careare"}>Careare</NavLink></li>
             </ul>
 
             <div className="flex justify-between gap-2 items-center px-4">
