@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import logo from '../assets/logo.png';
+import logo from '../../assets/logo.png';
 import { format } from 'date-fns';
 
 const Haders = () => {
