@@ -1,18 +1,12 @@
 import Image from "next/image";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-
-const newsDetails = async (id) => {
-    const res = await fetch(`https://openapi.programming-hero.com/api/news/${id}`);
-    const data = await res.json();
-    return data.data[0];
-}
+import { newsDetails } from "@/lib/data";
 
 const NewsPage = async ({ params }) => {
     const { id } = await params;
 
     const news = await newsDetails(id);
-
 
     const {
         title,
