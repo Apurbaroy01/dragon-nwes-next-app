@@ -1,5 +1,6 @@
 import { Eye, Flame, Star } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function NewsCard({ news }) {
   const {
@@ -47,12 +48,12 @@ export default function NewsCard({ news }) {
         </div>
 
         {/* Title */}
-        <h2 className="text-lg font-semibold text-gray-900 leading-snug line-clamp-2">
+        <h2 className=" text-lg font-semibold text-gray-900 leading-snug line-clamp-2">
           {title}
         </h2>
 
         {/* Details */}
-        <p className="text-sm text-gray-600 mt-2 line-clamp-3 flex-grow">
+        <p className="text-sm text-gray-600 mt-2 line-clamp-2 ">
           {details}
         </p>
 
@@ -87,6 +88,11 @@ export default function NewsCard({ news }) {
           <span className="bg-green-100 text-green-600 px-2 py-1 rounded-full font-medium">
             {rating?.badge}
           </span>
+        </div>
+        <div>
+          <Link href={`/news/${news._id}`} className="btn btn-primary mt-4 w-full p-5">
+            Read More
+          </Link>
         </div>
       </div>
     </div>

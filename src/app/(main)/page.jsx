@@ -3,7 +3,7 @@ import React from 'react';
 
 const HomePage = () => {
     return (
-        redirect('/news/01')
+        redirect('/category/01')
     );
 };
 

@@ -1,43 +1,69 @@
-import Leftbar from "@/components/HomePage/Leftbar";
-import NewsCard from "@/components/HomePage/NewsCard";
-import RightSidebar from "@/components/HomePage/RightSidebar";
-import { catagity, getCategoriesId } from "@/lib/data";
+import Image from "next/image";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
-
-export default async function Home({ params }) {
-
-  const { id } =await params;
-
-  const categories = await catagity();
-
-  const categoryNews = await getCategoriesId(id);
-
-
-  return (
-    <div className="grid grid-cols-12 max-w-5xl container mx-auto">
-      <div className="col-span-3">
-        <p className="p-2 font-semibold text-center">Categories</p>
-        <ul className="flex flex-col gap-2 p-2 rounded-xl">
-          {categories.map((item) => (
-            <Leftbar key={item.category_id} item={item} activeid={id} />
-          ))}
-        </ul>
-      </div>
-
-      <div className="col-span-6">
-        <p className="mb-4 text-center">All News</p>
-        {/* Grid */}
-        <div className="grid gap-6 sm:grid-cols-1 p-10">
-          {categoryNews.map((news) => (
-            <NewsCard key={news._id} news={news} />
-          ))}
-        </div>
-
-      </div>
-      <div className="col-span-3">
-        <p className="mb-4 text-center">Login with</p>
-        <RightSidebar />
-      </div>
-    </div>
-  );
+const newsDetails = async (id) => {
+    const res = await fetch(`https://openapi.programming-hero.com/api/news/${id}`);
+    const data = await res.json();
+    return data.data[0];
 }
+
+const NewsPage = async ({ params }) => {
+    const { id } = await params;
+
+    const news = await newsDetails(id);
+
+
+    const {
+        title,
+        image_url,
+        details,
+        author,
+    } = news;
+
+    return (
+        <div className="max-w-11/12 mx-auto bg-gray-100 border rounded-lg p-4">
+
+            {/* Image */}
+            <div className=" w-full h-64 rounded-lg overflow-hidden">
+                <Image
+                    src={image_url}
+                    alt={title}
+                    width={500}
+                    height={300}
+                    loading="lazy"
+                    className="object-cover"
+                />
+            </div>
+
+            {/* Content */}
+            <div className="mt-4 space-y-3">
+
+                {/* Title */}
+                <h1 className="text-lg md:text-xl font-bold text-gray-800 leading-snug">
+                    {title}
+                </h1>
+
+                {/* Meta + Details */}
+                <p className="text-sm text-gray-600 leading-relaxed">
+                    <span className="font-medium text-gray-700">
+                        {new Date(author?.published_date).toDateString()}
+                    </span>{" "}
+                    | {details}
+                </p>
+            </div>
+
+            {/* Button */}
+            <div className="mt-6">
+                <Link href={`/category/${news.category_id}`}>
+                    <button className="flex items-center gap-2 bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-md text-sm font-medium">
+                        <ArrowLeft size={16} />
+                        All news in this category
+                    </button>
+                </Link>
+            </div>
+        </div>
+    );
+};
+
+export default NewsPage;
