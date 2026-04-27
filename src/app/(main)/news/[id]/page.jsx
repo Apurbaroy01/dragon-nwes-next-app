@@ -1,31 +1,16 @@
 import Leftbar from "@/components/HomePage/Leftbar";
 import NewsCard from "@/components/HomePage/NewsCard";
 import RightSidebar from "@/components/HomePage/RightSidebar";
+import { catagity, getCategoriesId } from "@/lib/data";
 
-
-const catagity = async () => {
-  const res = await fetch("https://openapi.programming-hero.com/api/news/categories");
-  const data = await res.json();
-  return data.data.news_category;
-}
-const getCategoriesId = async (category_id) => {
-  const res = await fetch(`https://openapi.programming-hero.com/api/news/category/${category_id}`);
-  const data = await res.json();
-  return data.data;
-}
 
 export default async function Home({ params }) {
 
   const { id } =await params;
-  console.log("Category ID:", id);
-
-
 
   const categories = await catagity();
-  console.log(categories);
 
   const categoryNews = await getCategoriesId(id);
-  console.log(categoryNews);
 
 
   return (

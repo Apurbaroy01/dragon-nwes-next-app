@@ -22,7 +22,9 @@ export default function NewsCard({ news }) {
         alt={title}
         width={500}
         height={300}
-        className="w-full h-48 object-cover"
+        loading="lazy"
+        className="object-cover"
+        sizes="(max-width: 768px) 100vw, 400px"
       />
 
       {/* Content */}
