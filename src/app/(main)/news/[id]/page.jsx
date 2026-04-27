@@ -1,11 +1,58 @@
+import Leftbar from "@/components/HomePage/Leftbar";
+import NewsCard from "@/components/HomePage/NewsCard";
+import RightSidebar from "@/components/HomePage/RightSidebar";
 
 
-const NewsPage = () => {
-    return (
-        <div>
-            
+const catagity = async () => {
+  const res = await fetch("https://openapi.programming-hero.com/api/news/categories");
+  const data = await res.json();
+  return data.data.news_category;
+}
+const getCategoriesId = async (category_id) => {
+  const res = await fetch(`https://openapi.programming-hero.com/api/news/category/${category_id}`);
+  const data = await res.json();
+  return data.data;
+}
+
+export default async function Home({ params }) {
+
+  const { id } =await params;
+  console.log("Category ID:", id);
+
+
+
+  const categories = await catagity();
+  console.log(categories);
+
+  const categoryNews = await getCategoriesId(id);
+  console.log(categoryNews);
+
+
+  return (
+    <div className="grid grid-cols-12 max-w-5xl container mx-auto">
+      <div className="col-span-3">
+        <p className="p-2 font-semibold text-center">Categories</p>
+        <ul className="flex flex-col gap-2 p-2 rounded-xl">
+          {categories.map((item) => (
+            <Leftbar key={item.category_id} item={item} activeid={id} />
+          ))}
+        </ul>
+      </div>
+
+      <div className="col-span-6">
+        <p className="mb-4 text-center">All News</p>
+        {/* Grid */}
+        <div className="grid gap-6 sm:grid-cols-1 p-10">
+          {categoryNews.map((news) => (
+            <NewsCard key={news._id} news={news} />
+          ))}
         </div>
-    );
-};
 
-export default NewsPage;
+      </div>
+      <div className="col-span-3">
+        <p className="mb-4 text-center">Login with</p>
+        <RightSidebar />
+      </div>
+    </div>
+  );
+}
